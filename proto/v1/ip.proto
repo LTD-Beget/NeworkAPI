@@ -9,54 +9,54 @@ service IpService {
 
     rpc getDedicatedIpList (GetDedicatedIpListRequest) returns (GetDedicatedIpListResponse) {
         option (google.api.http) = {
-			get: "/v1/network/customer/ip"
+			get: "/v1/network/ip"
 		};
     }
 
     rpc addDedicatedIp (AddDedicatedIpRequest) returns (AddDedicatedIpResponse) {
         option (google.api.http) = {
-			post: "/v1/network/customer/ip"
+			post: "/v1/network/ip"
 			body: "*"
 		};
     }
 
     rpc setAutoRenew (SetAutoRenewRequest) returns (SetAutoRenewResponse) {
         option (google.api.http) = {
-			patch: "/v1/network/customer/ip/{ip}/renew"
+			patch: "/v1/network/ip/{ip}/renew"
 			body: "*"
 		};
     }
 
     rpc deleteIp (DeleteIpRequest) returns (DeleteIpResponse) {
         option (google.api.http) = {
-			delete: "/v1/network/customer/ip/{ip}"
+			delete: "/v1/network/ip/{ip}"
 		};
     }
 
     rpc setIpAsTransport (SetIpAsTransportRequest) returns (SetIpAsTransportResponse) {
         option (google.api.http) = {
-			patch: "/v1/network/mail/set-ip"
+			patch: "/v1/network/set-ip-as-transport"
 			body: "*"
 		};
     }
 
     rpc unsetIpAsTransport (UnsetIpAsTransportRequest) returns (UnsetIpAsTransportResponse) {
         option (google.api.http) = {
-			patch: "/v1/network/mail/unset-ip"
+			patch: "/v1/network/unset-ip-as-transport"
 			body: "*"
 		};
     }
 
     rpc setDomainIp (SetDomainIpRequest) returns (SetDomainIpResponse) {
         option (google.api.http) = {
-			patch: "/v1/network/domain/set-ip"
+			patch: "/v1/network/set-domain-ip"
 			body: "*"
 		};
     }
 
     rpc unSetDomainIp (UnSetDomainIpRequest) returns (UnSetDomainIpResponse) {
         option (google.api.http) = {
-			patch: "/v1/network/domain/unset-ip"
+			patch: "/v1/network/unset-domain-ip"
 			body: "*"
 		};
     }
@@ -124,9 +124,6 @@ message DeleteIpResponse {
     enum Error {
         // Внутренняя ошибка сервера
         INTERNAL_ERROR = 0;
-
-        // ресурс не принадлежит клиенту
-        INVALID_OWNER = 2;
     }
 }
 
@@ -142,15 +139,6 @@ message SetIpAsTransportResponse {
     enum Error {
         // Внутренняя ошибка сервера
         INTERNAL_ERROR = 0;
-
-        // домен не найден
-        DOMAIN_NOT_FOUND = 1;
-
-        // адрес не в системе
-        ADDRESS_NOT_RESERVED = 2;
-
-        // ip не принадлежит клиенту
-        INVALID_OWNER_IP = 3;
     }
 }
 message UnsetIpAsTransportRequest {
@@ -165,15 +153,6 @@ message UnsetIpAsTransportResponse {
     enum Error {
         // Внутренняя ошибка сервера
         INTERNAL_ERROR = 0;
-
-        // домен не найден
-        DOMAIN_NOT_FOUND = 1;
-
-        // адрес не в системе
-        ADDRESS_NOT_RESERVED = 2;
-
-        // ip не принадлежит клиенту
-        INVALID_OWNER_IP = 3;
     }
 }
 
@@ -191,18 +170,6 @@ message SetDomainIpResponse {
     enum Error {
         // Внутренняя ошибка сервера
         INTERNAL_ERROR = 0;
-
-        // домен не найден
-        DOMAIN_NOT_FOUND = 1;
-
-        // адрес не в системе
-        ADDRESS_NOT_RESERVED = 2;
-
-        // ip не принадлежит клиенту
-        INVALID_OWNER_IP = 3;
-
-        // домен не принадлежит клиенту
-        INVALID_OWNER_DOMAIN = 4;
     }
 }
 message UnSetDomainIpRequest {
@@ -218,30 +185,17 @@ message UnSetDomainIpResponse {
     enum Error {
         // Внутренняя ошибка сервера
         INTERNAL_ERROR = 0;
-
-        // домен не найден
-        DOMAIN_NOT_FOUND = 1;
-
-        // адрес не в системе
-        ADDRESS_NOT_RESERVED = 2;
-
-        // ip не принадлежит клиенту
-        INVALID_OWNER_IP = 3;
-
-        // домен не принадлежит клиенту
-        INVALID_OWNER_DOMAIN = 4;
     }
 }
 
 
 message Ip {
     string address = 1;
-    string option_id = 2;
-    string expires_at = 3; // дата по формату w3c
-    double cost = 4;
-    bool is_auto_renew_enabled = 5;
-    repeated string fqdn = 6;
-    bool is_special_transport = 7;
+    string expires_at = 2; // дата по формату w3c
+    double cost = 3;
+    bool is_auto_renew_enabled = 4;
+    repeated string fqdn = 5;
+    bool is_special_transport = 6;
 }
 
 
