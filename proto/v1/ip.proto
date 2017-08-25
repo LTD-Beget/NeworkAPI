@@ -3,7 +3,6 @@ syntax = "proto3";
 package beget.network.v1.network;
 
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 
 service IpService {
@@ -151,7 +150,7 @@ message SetIpAsTransportResponse {
         ADDRESS_NOT_RESERVED = 2;
 
         // ip не принадлежит клиенту
-        INVALID_OWNER_Ip = 3;
+        INVALID_OWNER_IP = 3;
     }
 }
 message UnsetIpAsTransportRequest {
@@ -174,7 +173,7 @@ message UnsetIpAsTransportResponse {
         ADDRESS_NOT_RESERVED = 2;
 
         // ip не принадлежит клиенту
-        INVALID_OWNER_Ip = 3;
+        INVALID_OWNER_IP = 3;
     }
 }
 
@@ -200,7 +199,7 @@ message SetDomainIpResponse {
         ADDRESS_NOT_RESERVED = 2;
 
         // ip не принадлежит клиенту
-        INVALID_OWNER_Ip = 3;
+        INVALID_OWNER_IP = 3;
 
         // домен не принадлежит клиенту
         INVALID_OWNER_DOMAIN = 4;
@@ -227,7 +226,7 @@ message UnSetDomainIpResponse {
         ADDRESS_NOT_RESERVED = 2;
 
         // ip не принадлежит клиенту
-        INVALID_OWNER_Ip = 3;
+        INVALID_OWNER_IP = 3;
 
         // домен не принадлежит клиенту
         INVALID_OWNER_DOMAIN = 4;
@@ -236,7 +235,7 @@ message UnSetDomainIpResponse {
 
 
 message Ip {
-    string ip = 1;
+    string address = 1;
     string option_id = 2;
     string expires_at = 3; // дата по формату w3c
     double cost = 4;
