@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package beget.network.v1.customer;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+
+service CustomerService {
+
+    rpc getDedicatedIPs (GetDedicatedIPsRequest) returns (GetDedicatedIPsResponse) {
+        option (google.api.http) = {
+			get: "/v1/network/customer/ips"
+		};
+    }
+
+    rpc addDedicatedIP (AddDedicatedIPRequest) returns (AddDedicatedIPResponse) {
+        option (google.api.http) = {
+			post: "/v1/network/customer/ips"
+			body: "*"
+		};
+    }
+
+    rpc setAutoRenew (SetAutoRenewRequest) returns (SetAutoRenewResponse) {
+        option (google.api.http) = {
+			patch: "/v1/network/customer/ips/{ip}/renew"
+			body: "*"
+		};
+    }
+
+    rpc deleteIP (DeleteIPRequest) returns (DeleteIPResponse) {
+        option (google.api.http) = {
+			delete: "/v1/network/customer/ips/{ip}"
+		};
+    }
+}
+
+message GetDedicatedIPsRequest {
+
+}
+
+message GetDedicatedIPsResponse {
+    repeated IP ips = 1;
+}
+
+message AddDedicatedIPRequest {
+
+}
+
+message AddDedicatedIPResponse {
+
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+    message Success {
+        IP ip = 1;
+    }
+    enum Error {
+        // Внутренняя ошибка сервера
+        INTERNAL_ERROR = 0;
+
+        // недостаточно денег
+        MONEY_NOT_ENOUGH = 1;
+
+        // нехорошему клиенту запрещено добавлять ip
+        NOT_PERMITTED = 2;
+
+        // закончились адреса
+        RESOURCES_DEPLETED = 3;
+    }
+}
+
+message SetAutoRenewRequest {
+    string ip = 1;
+    bool state = 2;
+}
+
+message SetAutoRenewResponse {
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+    message Success {
+        bool newState = 1;
+    }
+    enum Error {
+        // Внутренняя ошибка сервера
+        INTERNAL_ERROR = 0;
+    }
+}
+
+message DeleteIPRequest {
+    string ip = 1;
+}
+
+message DeleteIPResponse {
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+    message Success {
+        bool newState = 1;
+    }
+    enum Error {
+        // Внутренняя ошибка сервера
+        INTERNAL_ERROR = 0;
+
+        // ресурс не принадлежит клиенту
+        INVALID_OWNER = 2;
+    }
+}
+
+message IP {
+    string ip = 1;
+    string optionID = 2;
+    google.protobuf.Timestamp expiresAt = 3;
+    double cost = 4;
+    bool autoRenewEnabled = 5;
+    repeated string domainFqdns = 6;
+    bool isSpecialTransport = 7;
+}
+

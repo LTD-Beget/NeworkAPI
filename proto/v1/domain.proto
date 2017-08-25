@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package beget.network.v1.domain;
+
+import "google/api/annotations.proto";
+
+
+service DomainService {
+    rpc setDomainIP (SetDomainIPRequest) returns (SetDomainIPResponse) {
+        option (google.api.http) = {
+			patch: "/v1/network/domain/set-ip"
+			body: "*"
+		};
+    }
+
+    rpc unSetDomainIP (UnSetDomainIPRequest) returns (UnSetDomainIPResponse) {
+        option (google.api.http) = {
+			patch: "/v1/network/domain/unset-ip"
+			body: "*"
+		};
+    }
+}
+
+message SetDomainIPRequest {
+    string ip = 1;
+    string fqdn = 2;
+}
+message SetDomainIPResponse {
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+}
+message UnSetDomainIPRequest {
+    string ip = 1;
+    string fqdn = 2;
+}
+message UnSetDomainIPResponse {
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+}
+
+message Success {
+}
+
+enum Error {
+    // Внутренняя ошибка сервера
+    INTERNAL_ERROR = 0;
+
+    // домен не найден
+    DOMAIN_NOT_FOUND = 1;
+
+    // адрес не в системе
+    ADDRESS_NOT_RESERVED = 2;
+
+    // ip не принадлежит клиенту
+    INVALID_OWNER_IP = 3;
+
+    // домен не принадлежит клиенту
+    INVALID_OWNER_DOMAIN = 4;
+}
