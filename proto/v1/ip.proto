@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package beget.network.v1.network;
+package beget.network.v1.ip;
 
 import "google/api/annotations.proto";
 
@@ -30,34 +30,6 @@ service IpService {
     rpc deleteIp (DeleteIpRequest) returns (DeleteIpResponse) {
         option (google.api.http) = {
 			delete: "/v1/network/ip/{ip}"
-		};
-    }
-
-    rpc setIpAsTransport (SetIpAsTransportRequest) returns (SetIpAsTransportResponse) {
-        option (google.api.http) = {
-			patch: "/v1/network/set-ip-as-transport"
-			body: "*"
-		};
-    }
-
-    rpc unsetIpAsTransport (UnsetIpAsTransportRequest) returns (UnsetIpAsTransportResponse) {
-        option (google.api.http) = {
-			patch: "/v1/network/unset-ip-as-transport"
-			body: "*"
-		};
-    }
-
-    rpc setDomainIp (SetDomainIpRequest) returns (SetDomainIpResponse) {
-        option (google.api.http) = {
-			patch: "/v1/network/set-domain-ip"
-			body: "*"
-		};
-    }
-
-    rpc unSetDomainIp (UnSetDomainIpRequest) returns (UnSetDomainIpResponse) {
-        option (google.api.http) = {
-			patch: "/v1/network/unset-domain-ip"
-			body: "*"
 		};
     }
 }
@@ -126,68 +98,6 @@ message DeleteIpResponse {
         INTERNAL_ERROR = 0;
     }
 }
-
-message SetIpAsTransportRequest {
-    string ip = 1;
-}
-message SetIpAsTransportResponse {
-    oneof result {
-        Ip ip = 1;
-        Error error = 2;
-    }
-
-    enum Error {
-        // Внутренняя ошибка сервера
-        INTERNAL_ERROR = 0;
-    }
-}
-message UnsetIpAsTransportRequest {
-    string ip = 1;
-}
-message UnsetIpAsTransportResponse {
-    oneof result {
-        Ip ip = 1;
-        Error error = 2;
-    }
-
-    enum Error {
-        // Внутренняя ошибка сервера
-        INTERNAL_ERROR = 0;
-    }
-}
-
-
-message SetDomainIpRequest {
-    string ip = 1;
-    string fqdn = 2;
-}
-message SetDomainIpResponse {
-    oneof result {
-        Ip ip = 1;
-        Error error = 2;
-    }
-
-    enum Error {
-        // Внутренняя ошибка сервера
-        INTERNAL_ERROR = 0;
-    }
-}
-message UnSetDomainIpRequest {
-    string ip = 1;
-    string fqdn = 2;
-}
-message UnSetDomainIpResponse {
-    oneof result {
-        Ip ip = 1;
-        Error error = 2;
-    }
-
-    enum Error {
-        // Внутренняя ошибка сервера
-        INTERNAL_ERROR = 0;
-    }
-}
-
 
 message Ip {
     string address = 1;
