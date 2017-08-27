@@ -100,12 +100,12 @@ message DeleteResponse {
 }
 
 message Ip {
-    string address = 1;
+    string address = 1; // сам адрес
     string expires_at = 2; // дата по формату w3c
-    double cost = 3;
-    bool is_auto_renew_enabled = 4;
-    repeated string fqdn = 5;
-    bool is_special_transport = 6;
+    double cost = 3; // стоимость услуги в год, руб
+    bool is_auto_renew_enabled = 4; // будет ли продлен через год
+    repeated string fqdn = 5; // список доменов к которому привязан ip
+    bool is_email_transport = 6; // установлен ли ip как транспорт для почты
 }
 
 
