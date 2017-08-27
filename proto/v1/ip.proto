@@ -7,13 +7,13 @@ import "google/api/annotations.proto";
 
 service IpService {
 
-    rpc getDedicatedIpList (GetDedicatedIpListRequest) returns (GetDedicatedIpListResponse) {
+    rpc getList (GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
 			get: "/v1/network/ip"
 		};
     }
 
-    rpc addDedicatedIp (AddDedicatedIpRequest) returns (AddDedicatedIpResponse) {
+    rpc Add (AddRequest) returns (AddResponse) {
         option (google.api.http) = {
 			post: "/v1/network/ip"
 			body: "*"
@@ -27,26 +27,26 @@ service IpService {
 		};
     }
 
-    rpc deleteIp (DeleteIpRequest) returns (DeleteIpResponse) {
+    rpc delete (DeleteRequest) returns (DeleteResponse) {
         option (google.api.http) = {
 			delete: "/v1/network/ip/{ip}"
 		};
     }
 }
 
-message GetDedicatedIpListRequest {
+message GetListRequest {
 
 }
 
-message GetDedicatedIpListResponse {
+message GetListResponse {
     repeated Ip ip = 1;
 }
 
-message AddDedicatedIpRequest {
+message AddRequest {
 
 }
 
-message AddDedicatedIpResponse {
+message AddResponse {
 
     oneof result {
         Ip ip = 1;
@@ -84,11 +84,11 @@ message SetAutoRenewResponse {
     }
 }
 
-message DeleteIpRequest {
+message DeleteRequest {
     string ip = 1;
 }
 
-message DeleteIpResponse {
+message DeleteResponse {
     oneof result {
         Ip ip = 1;
         Error error = 2;
