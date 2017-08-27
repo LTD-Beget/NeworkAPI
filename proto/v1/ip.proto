@@ -13,7 +13,7 @@ service IpService {
 		};
     }
 
-    rpc Add (AddRequest) returns (AddResponse) {
+    rpc add (AddRequest) returns (AddResponse) {
         option (google.api.http) = {
 			post: "/v1/network/ip"
 			body: "*"
